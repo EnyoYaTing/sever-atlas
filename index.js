@@ -1,9 +1,17 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+require('./models/user');
+require('./services/passport');
+
+
+mongoose.connect(keys.mongoURI);
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send({ hi: 'Enyo'});
-});
+require('./routes/authRoutes')(app);
+
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log('Server app listening on port 5000'));
+app.listen(PORT);
+// app.listen(PORT, () => console.log('Server app listening on port 5000'));
